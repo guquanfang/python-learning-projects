@@ -76,6 +76,25 @@ Topics include:
 - `pytest.raises()`
 - Writing testable functions
 
+- ### `learning-progress-tracker`
+
+A command-line program for recording and reviewing learning sessions while practicing persistent data storage with CSV files.
+
+Topics include:
+
+- File I/O
+- CSV files
+- `csv.DictReader`
+- `csv.DictWriter`
+- Dictionaries
+- Exception handling
+- Input validation
+- `lambda`
+- `max()`
+- `sorted()`
+- Basic testing with `pytest`
+- Organizing code across multiple Python files
+
 ## What I Want to Record
 
 This repository is not only a collection of finished code.
