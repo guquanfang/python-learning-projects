@@ -76,7 +76,7 @@ Topics include:
 - `pytest.raises()`
 - Writing testable functions
 
-- ### `learning-progress-tracker`
+### `learning-progress-tracker`
 
 A command-line program for recording and reviewing learning sessions while practicing persistent data storage with CSV files.
 
