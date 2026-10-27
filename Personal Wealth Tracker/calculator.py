@@ -1,4 +1,5 @@
 import json
+from inputs import get_amount
 def calculator():
 
     cash = get_amount("输入现金账户: ")
@@ -20,18 +21,6 @@ def calculator():
     with open("assets.json", "w", encoding="utf-8") as file:
         file.write(json_text)
 
-def get_amount(prompt):
-    while True:
-        try:
-            amount = float(input(prompt))
-            if amount < 0:
-                print("金额不能为负数，请重新输入。")
-                continue
-            else:
-                return amount
-        except ValueError:
-            print("输入无效，请输入数字。")
-
 def load_assets():
     with open("assets.json", "r", encoding="utf-8") as file:
         return json.load(file)
@@ -44,4 +33,14 @@ def show_assets(assets):
         for key, value in assets.items():
             percentage = (value / total_assets) * 100
             print(f"{key}: {value:.2f}元 -- {percentage:.2f}%")
-    print(f"Total Assets: {total_assets:.2f}元")    
+    print(f"Total Assets: {total_assets:.2f}元") 
+
+def view_assets():
+     try:
+        assets = load_assets()
+        show_assets(assets)
+     except FileNotFoundError:
+        print("还没有保存的资产,请先选择1输入并保存")
+     except json.JSONDecodeError:
+        print("资产文件格式有误,暂时无法读取")
+
