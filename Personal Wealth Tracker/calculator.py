@@ -2,17 +2,7 @@ import json
 from inputs import get_amount
 def calculator():
 
-    cash = get_amount("输入现金账户: ")
-    bank = get_amount("输入银行账户: ")
-    long_term_investment = get_amount("输入长期投资: ")
-    trading_account = get_amount("输入交易账户: ")
-
-    assets = {
-    "现金": cash,
-    "银行": bank,
-    "长期投资": long_term_investment,
-    "交易账户": trading_account
-    }
+    assets = get_assets()
 
     show_assets(assets)
     
@@ -36,11 +26,25 @@ def show_assets(assets):
     print(f"Total Assets: {total_assets:.2f}元") 
 
 def view_assets():
-     try:
-        assets = load_assets()
-        show_assets(assets)
-     except FileNotFoundError:
-        print("还没有保存的资产,请先选择1输入并保存")
-     except json.JSONDecodeError:
-        print("资产文件格式有误,暂时无法读取")
+        try:
+            assets = load_assets()
+            show_assets(assets)
+        except FileNotFoundError:
+            print("还没有保存的资产,请先选择1输入并保存")
+        except json.JSONDecodeError:
+            print("资产文件格式有误,暂时无法读取")
 
+def get_assets():
+        cash = get_amount("输入现金账户: ")
+        bank = get_amount("输入银行账户: ")
+        long_term_investment = get_amount("输入长期投资: ")
+        trading_account = get_amount("输入交易账户: ")
+    
+        assets = {
+        "现金": cash,
+        "银行": bank,
+        "长期投资": long_term_investment,
+        "交易账户": trading_account
+        }
+
+        return assets

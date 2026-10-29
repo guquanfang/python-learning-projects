@@ -32,7 +32,7 @@ I am still a beginner, so avoid unnecessarily advanced syntax unless it is expla
 
 ## 3. Current Project Version
 
-Current version: `v0.5`
+Current version: `v0.6`
 
 Current goal:
 

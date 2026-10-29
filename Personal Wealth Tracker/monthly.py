@@ -1,4 +1,4 @@
-from inputs import get_amount
+from inputs import get_amount,get_month
 import json
 
 def get_monthly_record():
@@ -29,7 +29,7 @@ def update_monthly_records(monthly_records):
     if record["月份"] in monthly_records:
         key = input("输入y确认覆盖,其他输入取消\n")
         if key != "y":
-            print("已取消更新")
+            print("已取消覆盖")
             return monthly_records
         else:
             monthly_records[record["月份"]] = record           
@@ -61,26 +61,6 @@ def show_all_monthly_records(monthly_records):
             record = monthly_records[month]
             show_monthly_record(record)
  
-def get_month():
-    while True:
-        month = input("请输入月份：")
-        parts = month.split("-")
-        if len(parts) != 2 or len(parts[0]) != 4 or len(parts[1]) != 2:
-            print("月份输入有误,请重新输入")   
-        elif parts[0].isdigit() == False or parts[1].isdigit() == False:
-            print("月份输入有误,请重新输入")
-            continue
-        else:
-            try:
-                y = int(parts[0])
-                m = int(parts[1])
-            except ValueError:
-                print("月份输入有误，请重新输入")
-                continue
-            if y > 0 and 1 <= m <=12:
-                return month
-            else:
-                print("月份输入有误，请重新输入")
 
 def show_monthly_summary(monthly_records):
     if monthly_records == {}:
