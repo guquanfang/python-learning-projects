@@ -3,6 +3,7 @@ from calculator import get_assets,show_assets
 import json
 
 def get_asset_snapshot():
+
     month = get_month()
     assets = get_assets()
     liabilities = get_amount("输入负债")
@@ -16,6 +17,7 @@ def get_asset_snapshot():
     return snapshot
 
 def load_asset_history():
+
     try:
         with open("asset_history.json", "r", encoding = "utf-8") as file:
             return json.load(file)
@@ -23,12 +25,16 @@ def load_asset_history():
         return {}
 
 def save_asset_history(asset_history):
+
     json_text = json.dumps(asset_history, ensure_ascii=False, indent=4)
+
     with open("asset_history.json", "w", encoding = "utf-8") as file:
         file.write(json_text)
 
 def update_asset_history(asset_history):
+
     snapshot = get_asset_snapshot()
+
     if snapshot["月份"] in asset_history:
         key = input("输入y确认覆盖,输入其他取消\n")
         if key != "y":
@@ -38,13 +44,19 @@ def update_asset_history(asset_history):
             asset_history[snapshot["月份"]] = snapshot
     else:
          asset_history[snapshot["月份"]] = snapshot
+
     save_asset_history(asset_history)
+
     print("资产快照已保存")
+
     return asset_history
 
 def show_asset_snapshot(snapshot):
+
     print(f"{snapshot['月份']}")
+
     show_assets(snapshot["资产"])
+
     if "负债" in snapshot:
         net_worth = calculate_net_worth(snapshot)
         print(f"负债：{snapshot['负债']:.2f}元  净资产：{net_worth:.2f}元")
@@ -52,6 +64,7 @@ def show_asset_snapshot(snapshot):
         print("未记录负债,无法计算净资产")
 
 def show_all_asset_history(asset_history):
+
     if asset_history == {}:
         print("暂无资产历史记录")
         return
@@ -61,6 +74,7 @@ def show_all_asset_history(asset_history):
             show_asset_snapshot(snapshot)
 
 def show_asset_changes(asset_history):
+
     if asset_history == {}:
         print("暂无资产历史记录")
         return
@@ -83,8 +97,50 @@ def show_asset_changes(asset_history):
 
 
 def calculate_net_worth(snapshot):
+
     if "负债" not in snapshot:
         return None
     else:
         net_worth = sum(snapshot["资产"].values()) - snapshot["负债"]
         return net_worth
+
+def show_net_worth_changes(asset_history):
+
+    if asset_history == {}:
+        print("暂无资产历史记录")
+        return
+    else:
+        previous_net_worth = None
+        for month in sorted(asset_history):
+            snapshot = asset_history[month]
+            current_net_worth = calculate_net_worth(snapshot)
+            if current_net_worth is None:
+                    print(f"{month}缺少负债数据")
+                    previous_net_worth = None
+                    continue
+            else:
+                if previous_net_worth == None:
+                    print(f"{month}:净资产：{current_net_worth:.2f}元")
+                else:
+                    change_net_worth = current_net_worth - previous_net_worth
+                    print(f"{month}:净资产：{current_net_worth:.2f}元--净资产变化：{change_net_worth:.2f}元")
+            previous_net_worth = current_net_worth
+
+def prepare_net_worth_data(asset_history):
+
+    months = []
+    net_worths = []
+
+    for month in sorted(asset_history):
+
+        months.append(month)
+        snapshot = asset_history[month]
+        net_worth = calculate_net_worth(snapshot)
+        net_worths.append(net_worth)
+
+    return {
+            "月份":months,
+            "净资产":net_worths
+        }
+
+

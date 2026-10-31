@@ -1,6 +1,7 @@
 from calculator import calculator, view_assets
 from monthly import update_monthly_records,load_monthly_records,show_all_monthly_records,show_monthly_summary
-from asset_history import load_asset_history,update_asset_history,show_all_asset_history,show_asset_changes
+from asset_history import load_asset_history,update_asset_history,show_all_asset_history,show_asset_changes,show_net_worth_changes
+from charts import plot_net_worth_history
 
 def main():
     monthly_records = load_monthly_records()
@@ -14,6 +15,8 @@ def main():
         print("6.记录月度资产快照")
         print("7.查看历史资产")
         print("8.查看资产变化")
+        print("9.查看净资产变化")
+        print("10.查看净资产折线图")
         print("0.退出")
         choice = input("请选择：")
         if choice == "1":
@@ -32,6 +35,10 @@ def main():
             show_all_asset_history(asset_history)
         elif choice == "8":
             show_asset_changes(asset_history)
+        elif choice == "9":
+            show_net_worth_changes(asset_history)
+        elif choice == "10":
+            plot_net_worth_history(asset_history)
         elif choice =="0":
             print("已退出")
             break 
